@@ -9,7 +9,7 @@ app.config(function ($routeProvider) {
 });
 
 
-app.controller('homeCtrl',function($scope,$http,dataResource){
+app.controller('homeCtrl',function($scope,$http,dataResource,$mdDialog){
 	$scope.titulo="Consumiendo datos del API placeholder";
 	$scope.datosFormulario = {};
 	
@@ -27,10 +27,9 @@ app.controller('homeCtrl',function($scope,$http,dataResource){
 	});
 	
 
-    $scope.editar = function(data,index){
-    	
-    	angular.extend($scope.datosFormulario , data);
-    	$scope.datosFormulario.index = index;
+    $scope.editar = function(data,index){  
+		angular.extend($scope.datosFormulario , data);
+		$scope.datosFormulario.index = index;	
     }
 
     $scope.eliminar=function(data,index){
@@ -51,9 +50,23 @@ app.controller('homeCtrl',function($scope,$http,dataResource){
     		},
     		function(error){
     			console.log(error);
-    		});
-		
-    }
+    		});					
+			
+    };
+
+    $scope.showAdvanced = function(ev) {
+    	
+    	console.log("entre")
+    $mdDialog.show({
+      controller: DialogController,
+      templateUrl: 'dialog1.tmpl.html',
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true
+    })
+    
+  };
+  							
 
 });
 
@@ -74,3 +87,12 @@ app.factory("dataResource", function($resource){
 		}
 	);
 });
+
+function DialogController($scope, $mdDialog) {
+	$scope.hide = function() {
+		$mdDialog.hide();
+	};
+	$scope.cancel = function() {
+		$mdDialog.cancel();
+	};  
+}

@@ -17,13 +17,17 @@
 					<md-progress-linear md-mode="indeterminate" ng-show="isLoading"></md-progress-linear>
 				</md-toolbar>
 				
-				<md-content layout-padding style="height:350px;">
+				<md-content layout-padding style="height:350px;" id="popupContainer">
 					<md-list>
 						<md-list-item class="md-2-line" ng-repeat="data in datos | limitTo:20 track by data.id ">
 							<div class="md-list-item-text">
 								<h2 style="color:#009688">Titulo: {{ data.title }} </h2><h3 style="color:#FF5722" class="md-display-1">creado por: usuario: {{ data.userId }}</h3>
 								<p class="list-group-item-text">{{ data.body }}</p>
 								<br/>
+								
+								 <md-button class="md-fab md-primary" aria-label="Use Android" ng-click="showAdvanced($event)">
+          							<i class="icon icon-av-black-ic_play_circle_outline_black_24dp">face</i>
+        						</md-button>
 								<md-button class="md-raised" ng-click="editar(data,$index);">Editar</md-button>
 								<md-button class="md-raised md-warn" ng-click="eliminar(data,$index)">Eliminar </md-button>
 							</div>								
@@ -31,21 +35,53 @@
 					</md-list>					
 				</md-content>
 				<md-divider></md-divider>
-				<!--<div id="bottom">
+				<script type="text/ng-template" id="dialog1.tmpl.html">	
+				<md-dialog aria-label="Mango (Fruit)">
+					<form>
+						<md-toolbar>
+							<div class="md-toolbar-tools">
+								<h2>Editar: placeholder</h2>
+								<span flex></span>
+								<md-button class="md-icon-button" ng-click="cancel()">
+									<md-icon aria-label="Close dialog">x</md-icon>
+								</md-button>
+							</div>
+						</md-toolbar>
+						<md-dialog-content style="max-width:800px;max-height:810px; ">
+							
+								
 						<form>
-						<div class="form-group">
-							<label for="nom">Titulo</label>
-							<input type="text" class="form-control" name="titulo" id="titulo" >
-						</div>	
-						<div class="form-group">
-							<label for="nom">Post</label>
-							<input type="text" class="form-control" name="post" id="post" ng-model="datosFormulario.body">
-						</div>	
-						<div class="form-group">
-							<button class="btn btn-primary" ng-click="guardar(datosFormulario)">Guardar</button>
-						</div>
-						</form>			
-					</div>-->
+							<md-card>							
+								<md-card-content>
+									<md-input-container flex>
+										<label>Titulo</label>
+										<input ng-model="datosFormulario.title">
+									</md-input-container>
+									<md-input-container flex>
+										<label>Post</label>
+										<textarea ng-model="datosFormulario.body"></textarea>
+									</md-input-container>
+									<div class="md-actions" layout="row" layout-align="end LEFT">
+										<md-button class="md-raised md-primary" ng-click="guardar(datosFormulario)">Guardar</md-button>									
+									</div>
+								</md-card-content>								
+							</md-card>
+						</form>	
+												
+							
+						</md-dialog-content>
+							<div class="md-actions" layout="row">								
+								<span flex></span>
+								<md-button ng-click="hide()" >
+									Not Useful
+								</md-button>
+								<md-button ng-click="answer('useful')" style="margin-right:20px;" >
+									Useful
+								</md-button>
+							</div>
+					  </form>
+				</md-dialog>
+				</script>	
 					<md-content class="md-padding">
 						<form>
 							<md-card>							
